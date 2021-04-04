@@ -18,5 +18,5 @@ const productsSchema = new mongoose.Schema({
         required:true
     }
 })
-
-export default mongoose.models.product || mongoose.model('product',productsSchema)
+mongoose.models ={}
+export default   mongoose.model('product',productsSchema)

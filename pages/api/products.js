@@ -29,16 +29,16 @@ const getallProducts = async (req,res)=>{
 
 const saveProduct = async (req,res)=>{
  
-  const {name,price,description,mediaUrl} =  req.body
+  const {name,price,description,selectedFile} =  req.body
   try{
-      if(!name || !price || !description || !mediaUrl){
+      if(!name || !price || !description || !selectedFile){
     return res.status(422).json({error:"Please add all the fields"})
   }
    const product = await new Product({
      name,
      price,
      description,
-     mediaUrl
+     selectedFile
    }).save()
    res.status(201).json(product)
   }catch(err){

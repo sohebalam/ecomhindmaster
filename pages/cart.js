@@ -4,6 +4,7 @@ import cookie from 'js-cookie'
 import {useRouter} from 'next/router'
 import Link from 'next/link'
 import {useState} from 'react'
+import Image from "next/image"
 
 import StripeCheckout from 'react-stripe-checkout';
 
@@ -45,19 +46,21 @@ const Cart  = ({error,products})=>{
     const CartItems = ()=>{
         return(
             <>
+            <div className='container'>
               {cProducts.map(item=>{
                 price = price + item.quantity * item.product.price
                   return(
                       <div style={{display:"flex",margin:"20px"}} key={item._id}>
-                          <img src={item.product.mediaUrl} style={{width:"30%"}}/>
+                          <Image src={item.product.selectedFile} width="200rem" height='100rem'/>
                           <div style={{marginLeft:"20px"}}>
                               <h6>{item.product.name}</h6>
-                              <h6>{item.quantity} x  ₹ {item.product.price}</h6>
+                              <h6>{item.quantity} x  £ {item.product.price}</h6>
                               <button className="btn red" onClick={()=>{handleRemove(item.product._id)}}>remove</button>
                           </div>
                       </div>
                   )
               })}
+              </div>
             </>
         )
     }
@@ -82,7 +85,7 @@ const Cart  = ({error,products})=>{
     const TotalPrice = ()=>{
         return(
             <div className="container" style={{display:"flex",justifyContent:"space-between"}}>
-                <h5>total ₹ {price}</h5>
+                <h5>total £ {price}</h5>
                 {products.length != 0
                 &&  <StripeCheckout
                 name="My store"
@@ -124,13 +127,14 @@ export async function getServerSideProps(ctx){
             "Authorization":token
         }
     })
-    const products =  await res.json()
+    // console.log(res)
+    const products =  await res.json() 
     if(products.error){
         return{
             props:{error:products.error}
         }
     }
-    console.log("products",products)
+    // console.log("products",products)
     return {
         props:{products}
     }

@@ -33,7 +33,7 @@ const Login = ()=>{
   }
     return(
       <div className="container card authcard center-align">
-        <h3>LOGIN</h3>
+        <h3>Login</h3>
         <form onSubmit={(e)=>userLogin(e)}>
            <input type="email" placeholder="Email"
             value={email}
